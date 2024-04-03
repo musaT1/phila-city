@@ -1,0 +1,6 @@
+
+{
+  "name": "linux",
+  "forwardPorts": [ 3000 ],
+  "dockerFile": "./Dockerfile"
+}

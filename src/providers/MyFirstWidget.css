@@ -1,0 +1,7 @@
+.emphasize-element-item {
+  display: flex;
+  flex-direction: row;
+}
+.emphasize-element-item-part {
+  padding: 3px;
+}
