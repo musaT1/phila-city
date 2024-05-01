@@ -2,9 +2,8 @@ import { useActiveViewport } from "@itwin/appui-react";
 import React, { useEffect } from "react";
 import RealityDataApi from "./RealityDataApi";
 import "./MyFirstWidget.css";
-import { Button, Flex, ToggleSwitch } from "@itwin/itwinui-react";
+import { Button, ToggleSwitch } from "@itwin/itwinui-react";
 import { ColorDef, ContextRealityModelProps } from "@itwin/core-common";
-import { removeTab } from "@itwin/appui-layout-react";
 import { ColorPickerButton } from "@itwin/imodel-components-react";
 
 
