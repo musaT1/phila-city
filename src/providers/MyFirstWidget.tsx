@@ -2,8 +2,11 @@ import { useActiveViewport } from "@itwin/appui-react";
 import React, { useEffect } from "react";
 import RealityDataApi from "./RealityDataApi";
 import "./MyFirstWidget.css";
-import { ToggleSwitch } from "@itwin/itwinui-react";
-import { ContextRealityModelProps } from "@itwin/core-common";
+import { Button, Flex, ToggleSwitch } from "@itwin/itwinui-react";
+import { ColorDef, ContextRealityModelProps } from "@itwin/core-common";
+import { removeTab } from "@itwin/appui-layout-react";
+import { ColorPickerButton } from "@itwin/imodel-components-react";
+
 
 export const MyFirstWidget: React.FC = () => {
   const viewport = useActiveViewport();
@@ -11,7 +14,8 @@ export const MyFirstWidget: React.FC = () => {
   const [initialized, setInitialized] = React.useState<boolean>(false);
   const [realityModels, setRealityModelList] = React.useState<ContextRealityModelProps[]>([]);
   const [classifier, setClassifier] = React.useState<string>("");
-
+  const [listOfThings, setListOfThings] = React.useState<string[]>([]);
+  const [hiliteColor, setHiliteColor] = React.useState<ColorDef>(ColorDef.green);
   useEffect(() => {
     const asyncInitialize = async () => {
       if (viewport) {
@@ -21,6 +25,7 @@ export const MyFirstWidget: React.FC = () => {
         if(classifiers) {
           setClassifier(classifiers[0].value);
         }
+        setHiliteColor(viewport.hilite.color);
       }
     };
 
@@ -40,12 +45,44 @@ export const MyFirstWidget: React.FC = () => {
     }
   }
 
+  const addSplendid = async () => {
+    
+    setListOfThings([...listOfThings, "SPLENDID!"])
+  }
+
+  const removeTop = async () => {
+    setListOfThings(listOfThings.splice(1))
+  }
+  const onColorChange = async (newColor: ColorDef) => {
+    if (viewport) {
+      setHiliteColor (newColor)  
+      viewport.hilite = {...viewport.hilite, color: newColor};
+    }
+  }
+
+  const thingList = listOfThings.map((thing: string) => <li>{thing}</li>)
+
+  function addApple(): void {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <div>
-      This is my first widget
-      <ToggleSwitch onChange={togglePhillyReality} label='Philly Reality Data' />
-    </div>
+      This is my first widget, hello newName
+      <ToggleSwitch onChange={togglePhillyReality} label='Philly Reality Data'></ToggleSwitch>
+      <ColorPickerButton initialColor={hiliteColor} onColorPick={onColorChange} />
+      Select hilte color
+      <Button onClick={addSplendid}>Add Splendid</Button>
+      <Button onClick={addApple}>Add Apple</Button>
+      <Button onClick={removeTop}>Remove Top</Button>
+      
+      <ul>
+        {thingList}
+      </ul>
+      </div>
   );
 };
+    
+
 
 
